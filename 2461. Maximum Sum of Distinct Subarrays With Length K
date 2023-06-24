@@ -1,0 +1,31 @@
+class Solution {
+    public long maximumSubarraySum(int[] nums, int k) {
+        int i = 0, j = 0, n = nums.length;
+        long tsum = 0, max = 0;
+        HashMap<Integer, Integer> mp = new HashMap<>();
+        while(j < n) {
+            // calculation
+            tsum += nums[j];
+            mp.put(nums[j], mp.getOrDefault(nums[j], 0) + 1);
+            // checks window size
+            if((j-i+1) < k) {
+                j++;
+            }
+            // if window size hits K 
+            else if((j-i+1) == k) {
+                // consider this only if hashmap size and window size 
+                // is same, i.e., if all elements are distinct
+                if(mp.size() == k) max = Math.max(max, tsum);
+                // remove prev element's value from temp sum
+                // variable since we are sliding the window forward
+                tsum -= nums[i];
+                mp.put(nums[i], mp.get(nums[i]) -1);
+                if(mp.get(nums[i]) == 0) mp.remove(nums[i]);
+                // slide forward
+                i++;
+                j++;
+            }
+        }
+        return max;
+    }
+}
