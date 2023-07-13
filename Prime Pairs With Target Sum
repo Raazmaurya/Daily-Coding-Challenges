@@ -1,0 +1,29 @@
+class Solution {
+    public List<List<Integer>> findPrimePairs(int n) {
+        
+        int[] prime = new int[n+1];
+
+        for(int i=2;i*i<=n;i++){
+
+            if(prime[i]==0){
+                for(int j=i*i;j<=n;j=j+i){
+                    prime[j]=1;
+                }
+            }
+        }
+
+        List<List<Integer>> ans = new ArrayList<>();
+
+        for(int i=2;i<=n/2;i++){
+
+            if(prime[i]==0 && prime[n-i]==0){
+                List<Integer> list = new ArrayList<>();
+                list.add(i);
+                list.add(n-i);
+                ans.add(list);
+            }
+        }
+
+        return ans;
+    }
+}
