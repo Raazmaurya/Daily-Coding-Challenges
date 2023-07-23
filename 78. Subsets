@@ -1,0 +1,20 @@
+class Solution {
+    List<List<Integer>> ans = new ArrayList<>();
+    List <Integer> curr = new ArrayList<>();
+    public List<List<Integer>> subsets(int[] nums) {
+        generateSubsets(nums,nums.length, 0);
+        return ans;
+    
+
+    }
+    void generateSubsets(int[] num ,int n, int start ){
+        if(start == n){
+            ans.add(new ArrayList<>(curr));
+            return;
+        }
+        generateSubsets(num, n , start+1);
+        curr.add(num[start]);
+        generateSubsets(num, n , start+1);
+        curr.remove(curr.size()-1);
+    }
+}
