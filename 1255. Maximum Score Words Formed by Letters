@@ -1,0 +1,30 @@
+class Solution {
+    public int maxScoreWords(String[] words, char[] letters, int[] score) {
+        int[] farr = new int[26];
+        for(char ch : letters) farr[ch - 'a']++;
+        return solve(words, farr, score,0);
+
+        
+    }
+    public static int solve(String[] words, int [] farr, int[] score, int idx){
+        if(idx== words.length) return 0;
+        int sno = 0 + solve(words, farr, score, idx+1);
+        int sword = 0;
+        boolean flag = true;
+        String word = words[idx];
+        int syes = 0 ;
+        for(int i = 0; i<word.length(); i++){
+            char ch = word.charAt(i);
+            if(farr[ch-'a'] == 0) flag= false;
+            farr[ch-'a']--;
+            sword += score[ch-'a'];
+        }
+        if(flag) syes = sword + solve(words , farr, score, idx+1);
+        for(int i = 0 ; i<word.length() ;i++ ){
+            char ch = word.charAt(i);
+            farr[ch-'a']++;
+
+        }
+        return Math.max(sno, syes);
+    }
+}
