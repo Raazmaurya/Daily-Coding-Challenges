@@ -1,0 +1,66 @@
+class Solution {
+    public long smallestNumber(long num) {
+
+        // Converting num into List
+        ArrayList<Long> List = new ArrayList<Long>();
+        for (long i = Math.abs(num); i > 0; i /= 10) {
+            long rem = i % 10;
+            List.add(rem);
+        }
+
+        // Sorting List
+        Collections.sort(List);
+
+        // For positive number
+        if (num > 0) {
+
+            // Converting List into Array
+            long[] arr = new long[List.size()];
+            for (int i = 0; i < arr.length; i++) {
+                arr[i] = List.get(i);
+            }
+
+            // Finding number of zeros in arr
+            int zero = -1;
+            for (int i = 0; i < arr.length; i++) {
+                if (arr[i] != 0) {
+                    zero = i;
+                    break;
+                }
+            }
+
+            // Swapping elements
+            long temp = arr[0];
+            arr[0] = arr[zero];
+            arr[zero] = temp;
+
+            int power = arr.length - 1;
+            long number = 0;
+            for (int i = 0; i < arr.length; i++) {
+                number += arr[i] * Math.pow(10, power);
+                power--;
+            }
+
+            return (number);
+        }
+
+        // For negative number
+        else {
+            // Converting List into Array
+            long[] arr = new long[List.size()];
+            for (int i = 0; i < arr.length; i++) {
+                arr[arr.length - i - 1] = List.get(i);
+            }
+
+            // Converting Array into number
+            int power = arr.length - 1;
+            long number = 0;
+            for (int i = 0; i < arr.length; i++) {
+                number += arr[i] * Math.pow(10, power);
+                power--;
+            }
+
+            return (-1 * number);
+        }
+    }
+}
