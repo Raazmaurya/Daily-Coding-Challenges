@@ -1,0 +1,21 @@
+class Solution {
+    List<List<Integer>> res=new ArrayList<List<Integer>>();
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        recursion(candidates,0,target,new ArrayList<Integer>());
+        return res;
+    }
+
+    public void recursion(int[] can,int ind,int target,List<Integer> lis){
+        if (target==0){
+            res.add(new ArrayList<Integer>(lis));
+            return ;
+        }
+        if (target<0)
+            return ;
+        for(int i=ind;i<can.length;i++){
+            lis.add(can[i]);
+            recursion(can,i,target-can[i],lis);
+            lis.remove(lis.size()-1);
+        }
+    }
+}
